@@ -1,0 +1,81 @@
+<!-- templates/movie_detail.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css"> <!-- Link to your CSS file -->
+    <title>{{ movie.title }}</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            transition: all .3s;
+            user-select: none;
+            text-decoration: none;
+        }
+        body {
+           
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            background: url('https://assets.nflxext.com/ffe/siteui/vlv3/76c10fc9-7ccd-4fbf-bc59-f16a468921ca/4fb4af6e-d0ca-4c7f-b004-b34226727e55/IN-en-20230529-popsignuptwoweeks-perspective_alpha_website_large.jpg');
+            background-size: cover;
+            position: relative;
+        }
+
+        .container {
+            max-width: 1200px; /* Maximum width of the content */
+            margin: auto; /* Centering the container */
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.6); /* White background for content */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Light shadow */
+            border-radius: 8px; /* Rounded corners */
+            display: flex;
+            color: white;
+        }
+        .dummy{
+            margin-left: 40px;
+        }
+
+        h1 {
+            font-size: 2em; /* Title size */
+            margin-bottom: 10px;
+        }
+
+        img {
+            max-width: 100%; /* Responsive image */
+            height: auto;
+        }
+
+        a {
+            color: #007BFF; /* Link color */
+            text-decoration: none; /* No underline */
+        }
+
+        a:hover {
+            text-decoration: underline; /* Underline on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="{{ movie.poster_url }}" alt="{{ movie.title }} poster" style="border-radius: 20px; width:300px">
+        <div class="dummy">
+            <h1>{{ movie.title }}</h1> 
+            <br> 
+            <p><strong>Description:</strong> {{ movie.description }}</p>
+            <br>
+            <p><strong>Release Date:</strong> {{ movie.release_date }}</p>
+            <br>
+            <p><strong>Rating:</strong> {{ movie.rating }}</p>
+            <br><br><br>
+            <a href="/get_movie">Back to suggestions</a>
+        </div>
+    </div>
+</body>
+</html>

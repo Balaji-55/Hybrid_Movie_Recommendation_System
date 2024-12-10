@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Your existing CSS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            transition: all .3s;
+            user-select: none;
+            text-decoration: none;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            background: url('https://assets.nflxext.com/ffe/siteui/vlv3/76c10fc9-7ccd-4fbf-bc59-f16a468921ca/4fb4af6e-d0ca-4c7f-b004-b34226727e55/IN-en-20230529-popsignuptwoweeks-perspective_alpha_website_large.jpg');
+            background-size: cover;
+            position: relative;
+        }
+
+        body:after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, .60);
+            box-shadow: inset 0 0 20px #000, inset 0 0 80px #000;
+        }
+
+        form {
+            width: screen; /* Increased width */
+            padding: 80px 40px;
+            color: #fff;
+            border-radius: 10px;
+            position: relative; /* Changed to relative */
+            cursor: grab;
+            max-height: 90vh; /* Restrict height to enable scrolling */
+            overflow-y: auto; /* Enable vertical scrolling */
+            overflow-x: hidden; /* Hide horizontal scrollbar */
+            scroll-behavior: smooth;
+        }
+
+        /* Hide scrollbar for WebKit browsers (Chrome, Safari) */
+        form::-webkit-scrollbar {
+            display: none; /* Hide the scrollbar */
+        }
+
+        /* Hide scrollbar for Firefox */
+        form {
+            scrollbar-width: none; /* Hide scrollbar */
+        }
+
+        form h3 {
+            color: #fff;
+            text-transform: capitalize;
+            font-size: 1.8em;
+            text-align: center;
+        }
+
+        .inputbox {
+            margin: 25px 0;
+            position: relative;
+        }
+
+        .inputbox input {
+            border: none;
+            outline: none;
+            padding: 15px 15px;
+            width: 50%;
+            margin-left: 25%;
+            font-size: 1em;
+            user-select: none;
+            outline: 2px solid hsl(282, 98%, 50%);
+            border-radius: 5px;
+            background: #111;
+            color: #fff;
+        }
+
+        .inputbox input:focus {
+            background: #222;
+        }
+
+        .submit {
+            width: 50%;
+            border: none;
+            outline: none;
+            padding: 15px 0;
+            margin-left: 25%;
+            font-size: 1em;
+            text-transform: capitalize;
+            color: #eee;
+            background: hsl(282, 98%, 50%);
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .submit:hover {
+            background: #222;
+            box-shadow: 0 0 20px #000;
+        }
+
+        /* Top Rated Movies Section */
+        .top-rated-container {
+            margin-top: 30px;
+            text-align: center;
+            position: relative; /* Added to position buttons relative to this container */
+        }
+
+        .top-rated-container h4 {
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .movie-scroll {
+            display: flex;
+            overflow-x: auto; /* Allow scrolling without showing scrollbar */
+            position: relative;
+            white-space: nowrap;
+            scroll-behavior: smooth;
+            scrollbar-width: none; /* Firefox */
+            margin-right: 50px;
+        }
+
+        /* Hide scrollbar for WebKit browsers (Chrome, Safari) */
+        .movie-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        .movie {
+            min-width: 150px;
+            margin: 0 20px; /* Increased margin for extra space */
+            transition: transform 0.3s;
+            text-align: center; /* Center the text */
+        }
+
+        .movie img {
+            width: 100%;
+            border-radius: 5px;
+        }
+
+        .movie h5 {
+            margin-top: 10px; /* Space between image and title */
+            white-space: normal; /* Allow text to wrap to the next line */
+            overflow: hidden; /* Hide overflow text */
+            text-overflow: ellipsis; /* Add ellipsis if text is too long */
+            max-height: 2em; /* Limit height to two lines */
+            line-height: 1.2em; /* Adjust line height for better spacing */
+        }
+
+        .scroll-button {
+            position: absolute; /* Change to absolute positioning */
+            top: 50%;
+            background-color: rgba(38, 1, 252, 0.8);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            padding: 10px;
+            z-index: 1; /* Ensure buttons are above other elements */
+        }
+
+        .scroll-left {
+            left: -50px; /* Adjust position to the left */
+        }
+
+        .scroll-right {
+            right: -50px; /* Adjust position to the right */
+        }
+    </style>
+</head>
+<body>
+
+    <form id="login-form">
+        <h3>A DUAL METHOD MOVIE RECOMMENDATION SYSTEM </h3>
+
+        <!-- movie name -->
+        <div class="inputbox password-create">
+            <input type="text" placeholder="Enter movie name">
+        </div>
+
+        <!-- Create Account Button -->
+        <div class="inputbox">
+            <button class="submit" id="GET-RECOMMEND-btn" type="submit">Get Recommend</button>
+        </div>
+
+        <!-- Top Rated Movies Section -->
+        <div class="top-rated-container">
+            <h4>{{ header_title }}</h4>
+            <div class="movie-scroll" id="movie-scroll">
+                <!-- Sample movie poster elements -->
+                {% if result and result.recommendations %}
+                    {% for movie in result.recommendations %}
+                    <div class="movie">
+                        <a style="color:white" href="/movie/{{ movie.title }}">
+                            <img src="{{ movie.poster_url }}" alt="{{ movie.title }}">
+                            <h5>{{ movie.title }}</h5>
+                            <p>Rating: {{ movie.vote_average }}</p>
+                        </a>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <p>No recommendations available.</p>
+                {% endif %}
+            </div>
+
+            <!-- Scroll buttons -->
+            <button class="scroll-button scroll-left" onclick="scrollMovies(event, -1)">&#60;</button>
+            <button class="scroll-button scroll-right" onclick="scrollMovies(event, 1)">&#62;</button>
+        </div>
+    </form>
+
+    <script>
+        // Scroll function
+        function scrollMovies(event, direction) {
+            event.preventDefault(); // Prevent form submission
+            const scrollContainer = document.getElementById('movie-scroll');
+            const scrollAmount = 160; // Amount to scroll (adjust as needed)
+
+            // Scroll left or right
+            scrollContainer.scrollBy({
+                left: direction * scrollAmount,
+                behavior: 'smooth'
+            });
+        }
+
+        // Attach click event listener to the recommend button
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('GET-RECOMMEND-btn').addEventListener('click', function(event) {
+                event.preventDefault();  // Prevent the default form submission
+                
+                const movieName = document.querySelector('.password-create input').value.trim();
+                
+                if (!movieName) {
+                    alert("Please enter a movie name.");
+                    return;
+                }
+
+                // Redirect to the FastAPI endpoint with the movie name as a query parameter
+                window.location.href = `/get_movie?title=${encodeURIComponent(movieName)}`;
+            });
+        });
+    </script>
+    
+</body>
+</html>
